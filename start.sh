@@ -19,20 +19,23 @@ tar -xzf hermes-msnr-01.tar.gz -C ~/hermes
 
 cd ~/hermes/.hermes/hermes-agent
 
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
 export PATH="$HOME/.local/bin:$PATH"
 
 uv sync
 
 uv pip install --python .venv/bin/python \
-fastapi \
-uvicorn \
-discord.py \
-python-telegram-bot \
-playwright \
-pynacl \
-davey
+  fastapi \
+  uvicorn \
+  discord.py \
+  python-telegram-bot \
+  playwright \
+  pynacl \
+  davey
+
+npm install --include=dev
+
+PLAYWRIGHT_BROWSERS_PATH=0 \
+  .venv/bin/python -m playwright install chromium
 
 : '
 cat > ~/hermes/.hermes/.env << EOF
@@ -49,10 +52,15 @@ EOF
 source ~/hermes/.hermes/hermes-agent/.venv/bin/activate
 
 python run_agent.py > /dev/null 2>&1 &
+
+sleep 5
+
 hermes gateway run > /dev/null 2>&1 &
+
+sleep 3
+
 exec hermes dashboard \
   --host 0.0.0.0 \
   --port 1000 \
   --insecure \
   --no-open
-  
