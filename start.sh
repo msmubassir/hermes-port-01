@@ -23,9 +23,11 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 export PATH="$HOME/.local/bin:$PATH"
 
-uv sync --all-extras
+uv sync
 
 uv pip install --python .venv/bin/python \
+fastapi \
+uvicorn \
 discord.py \
 python-telegram-bot \
 playwright \
