@@ -52,8 +52,9 @@ source ~/hermes/.hermes/hermes-agent/.venv/bin/activate
 
 python run_agent.py > /dev/null 2>&1 &
 hermes gateway run > /dev/null 2>&1 &
-hermes dashboard \
+exec hermes dashboard \
   --host 0.0.0.0 \
   --port 1000 \
   --insecure \
-  --no-open > /dev/null 2>&1 &
+  --no-open
+  
