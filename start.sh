@@ -34,10 +34,6 @@ playwright \
 pynacl \
 davey
 
-npm install --include=dev
-
-.venv/bin/python -m playwright install chromium
-
 : '
 cat > ~/hermes/.hermes/.env << EOF
 TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN
