@@ -3,6 +3,7 @@ FROM python:3.11
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
+    git \
     curl \
     ffmpeg \
     nodejs \
@@ -24,7 +25,12 @@ RUN apt-get update && apt-get install -y \
     libcairo2 \
     libasound2 \
     libsodium-dev \
-    libopus-dev
+    libopus-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
+ENV PATH="/root/.local/bin:$PATH"
 
 COPY start.sh .
 
