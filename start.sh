@@ -2,6 +2,8 @@
 
 set -e
 
+export HERMES_HOME="/root/hermes/.hermes"
+
 cd /root/hermes/.hermes/hermes-agent
 
 export PATH="/root/.local/bin:$PATH"
