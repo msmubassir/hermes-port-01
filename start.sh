@@ -2,54 +2,12 @@
 
 set -e
 
-cd ~
+cd /root/hermes/.hermes/hermes-agent
 
-rm -rf ~/hermes
+export PATH="/root/.local/bin:$PATH"
+export PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
-mkdir -p ~/hermes
-
-cd ~/hermes
-
-curl -L -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36" \
-  -b "accountToken=301Yza6kh58zzdg6suSwijSuQwLrqTJj" \
-  -o hermes-msnr-01.tar.gz \
-  "https://store1.gofile.io/download/web/85903fad-02ae-40e3-bdb4-54cce39f700c/hermes-msnr-01.tar.gz"
-
-tar -xzf hermes-msnr-01.tar.gz -C ~/hermes
-
-cd ~/hermes/.hermes/hermes-agent
-
-export PATH="$HOME/.local/bin:$PATH"
-
-uv sync
-
-uv pip install --python .venv/bin/python \
-  fastapi \
-  uvicorn \
-  discord.py \
-  python-telegram-bot \
-  playwright \
-  pynacl \
-  davey
-
-npm install --include=dev
-
-PLAYWRIGHT_BROWSERS_PATH=0 \
-  .venv/bin/python -m playwright install chromium
-
-: '
-cat > ~/hermes/.hermes/.env << EOF
-TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN
-TELEGRAM_ALLOWED_USERS=$TELEGRAM_ALLOWED_USERS
-TELEGRAM_HOME_CHANNEL=$TELEGRAM_HOME_CHANNEL
-
-DISCORD_BOT_TOKEN=$DISCORD_BOT_TOKEN
-DISCORD_ALLOWED_USERS=$DISCORD_ALLOWED_USERS
-DISCORD_HOME_CHANNEL=$DISCORD_HOME_CHANNEL
-EOF
-'
-
-source ~/hermes/.hermes/hermes-agent/.venv/bin/activate
+source .venv/bin/activate
 
 python run_agent.py > /dev/null 2>&1 &
 
