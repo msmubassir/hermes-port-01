@@ -2,22 +2,22 @@
 
 set -e
 
-cd /opt
+cd ~
 
-rm -rf /opt/hermes
+rm -rf ~/hermes
 
-mkdir -p /opt/hermes
+mkdir -p ~/hermes
 
-cd /opt/hermes
+cd ~/hermes
 
 curl -L -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36" \
   -b "accountToken=301Yza6kh58zzdg6suSwijSuQwLrqTJj" \
   -o hermes-msnr-01.tar.gz \
   "https://store1.gofile.io/download/web/85903fad-02ae-40e3-bdb4-54cce39f700c/hermes-msnr-01.tar.gz"
 
-tar -xzf hermes-msnr-01.tar.gz -C /opt/hermes
+tar -xzf hermes-msnr-01.tar.gz -C ~/hermes
 
-cd /opt/hermes/.hermes/hermes-agent
+cd ~/hermes/.hermes/hermes-agent
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -62,7 +62,7 @@ npm install --include=dev
 .venv/bin/python -m playwright install --with-deps chromium
 
 : '
-cat > /opt/hermes/.hermes/.env << EOF
+cat > ~/hermes/.hermes/.env << EOF
 TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN
 TELEGRAM_ALLOWED_USERS=$TELEGRAM_ALLOWED_USERS
 TELEGRAM_HOME_CHANNEL=$TELEGRAM_HOME_CHANNEL
@@ -73,7 +73,7 @@ DISCORD_HOME_CHANNEL=$DISCORD_HOME_CHANNEL
 EOF
 '
 
-source .venv/bin/activate
+source ~/hermes/.hermes/hermes-agent/.venv/bin/activate
 
 python run_agent.py
 hermes gateway run > /dev/null 2>&1 &
