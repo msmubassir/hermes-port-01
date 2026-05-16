@@ -19,6 +19,8 @@ tar -xzf hermes-msnr-01.tar.gz -C /opt/hermes
 
 cd /opt/hermes/.hermes/hermes-agent
 
+export DEBIAN_FRONTEND=noninteractive
+
 apt-get update -qq && apt-get install -y -qq \
 libnspr4 \
 libnss3 \
@@ -44,6 +46,8 @@ npm
 
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
+export PATH="$HOME/.local/bin:$PATH"
+
 uv sync
 
 uv pip install --python .venv/bin/python \
@@ -53,9 +57,10 @@ playwright \
 pynacl \
 davey
 
-npm install
+npm install --include=dev
 
-.venv/bin/python -m playwright install chromium
+.venv/bin/python -m playwright install --with-deps chromium
+
 : '
 cat > /opt/hermes/.hermes/.env << EOF
 TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN
@@ -67,6 +72,7 @@ DISCORD_ALLOWED_USERS=$DISCORD_ALLOWED_USERS
 DISCORD_HOME_CHANNEL=$DISCORD_HOME_CHANNEL
 EOF
 '
+
 source .venv/bin/activate
 
 python run_agent.py
