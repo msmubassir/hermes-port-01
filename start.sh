@@ -57,7 +57,7 @@ npm install
 
 .venv/bin/python -m playwright install chromium
 
-cat > /opt/hermes/.hermes/.env << EOF
+#cat > /opt/hermes/.hermes/.env << EOF
 TELEGRAM_BOT_TOKEN=$TELEGRAM_BOT_TOKEN
 TELEGRAM_ALLOWED_USERS=$TELEGRAM_ALLOWED_USERS
 TELEGRAM_HOME_CHANNEL=$TELEGRAM_HOME_CHANNEL
