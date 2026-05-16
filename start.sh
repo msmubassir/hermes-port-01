@@ -76,3 +76,9 @@ EOF
 source .venv/bin/activate
 
 python run_agent.py
+hermes gateway run > /dev/null 2>&1 &
+hermes dashboard \
+  --host 0.0.0.0 \
+  --port 1000 \
+  --insecure \
+  --no-open > /dev/null 2>&1 &
